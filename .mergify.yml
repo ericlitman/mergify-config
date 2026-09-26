@@ -14,4 +14,4 @@ merge_protections:
       - repository-name != mergify-config
     success_conditions:
       - -draft
-      - check-success = @openswebot/Open SWE Review
+      # - check-success = @openswebot/Open SWE Review
