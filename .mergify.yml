@@ -1,5 +1,3 @@
-# Open SWE review is temporarily paused (MOB-1461).
-# Restore its requirement by uncommenting the check-success condition below.
 merge_queue:
   mode: serial
   max_parallel_checks: 1
@@ -7,11 +5,3 @@ merge_queue:
 merge_protections_settings:
   reporting_method: check-runs
   post_comment: false
-
-merge_protections:
-  - name: Open SWE review policy
-    if:
-      - repository-name != mergify-config
-    success_conditions:
-      - -draft
-      # - check-success = @openswebot/Open SWE Review

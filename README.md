@@ -1,11 +1,25 @@
-# Shared Mergify policy
+# Shared Mergify configuration
 
-Consumers in this GitHub owner use `extends: mergify-config` in their Mergify configuration. Repository-specific checks and queue behavior remain in each consumer. Mergify Merge Protections must be a required GitHub check, bound to the Mergify app (10562).
+Repositories owned by `ericlitman` can import these defaults with:
 
-Open SWE review is temporarily paused under MOB-1461. The shared rule still rejects drafts. To restore review, unsuspend the Open SWE installation first, uncomment the Open SWE check conditions in `.mergify.yml`, validate a consumer canary, and merge the policy change. Refresh existing consumer pull requests and verify their Mergify results; do not assume every existing PR is reevaluated immediately.
+```yaml
+extends: mergify-config
+```
 
-The source excludes itself from Open SWE review so policy can be restored without a circular dependency. Changes to this repository require deliberate review. Never add application-specific CI requirements here. Do not put secrets or private repository details in a public source.
+The shared file sets a serial queue, one parallel check, and GitHub check-run
+reporting without PR comments. Each consumer owns its queue rules, CI checks,
+and review requirements. Importing these defaults alone does not enable
+automatic merging.
 
-Mergify supports one level of same-owner inheritance. Local rules with the same name override inherited rules; do not shadow the shared policy names. Shared YAML anchors do not cross configuration files.
+Edit `.mergify.yml` here through a pull request, using GitHub or Mergify's config
+editor. The repository owner administers this policy; no additional human
+reviewer is required. Consumers read the default branch after the change merges.
+Use `@mergifyio refresh` on an existing consumer PR to request reevaluation.
 
-Linear: MOB-1461
+Mergify resolves `extends` within the same repository owner. Its app must have
+access to the source. Public consumers need a public source. Only one extension
+level is supported, and local values and same-name rules take precedence.
+
+Repository-specific checks remain in the consumer configuration and GitHub
+protections. Subscription coverage and product activation are managed separately
+in Mergify.
